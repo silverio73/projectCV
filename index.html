@@ -25,7 +25,6 @@
             min-height: 100vh;
         }
         
-        /* Animações */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
@@ -50,7 +49,6 @@
             box-shadow: var(--shadow-neon);
         }
         
-        /* Login */
         .login-container {
             position: fixed;
             top: 0;
@@ -155,7 +153,6 @@
             color: white;
         }
         
-        /* App */
         .app-container {
             display: none;
         }
@@ -413,7 +410,6 @@
 <body>
     <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
     
-    <!-- LOGIN -->
     <div class="login-container" id="loginContainer">
         <div class="login-card">
             <div class="login-logo">
@@ -433,7 +429,6 @@
         </div>
     </div>
     
-    <!-- APP -->
     <div class="app-container" id="appContainer">
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -465,9 +460,7 @@
     <div id="toastContainer"></div>
 
     <script>
-        // ========== SUPABASE ==========
-        // const SUPABASE_URL = "https://fvyflphrjjzkhheekrjr.supabase.co";
-        // const SUPABASE_KEY = "sb_publishable_eyM_Wra1ho4lSqBncSpAWg_W4XAcvAa";
+        // ========== SUPABASE - PROJETO CORRETO ==========
         const SUPABASE_URL = "https://ndcmhuiuhnxmtblsbxmc.supabase.co";
         const SUPABASE_KEY = "sb_publishable_a27v01_Evo8ocfrOACzXrQ_X_oKJv4V";
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);

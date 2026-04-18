@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV Premium - Sistema Completo</title>
+    <title>CV Premium - Funcional</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/html2pdf.js/dist/html2pdf.bundle.min.js"></script>
@@ -107,7 +107,7 @@
     <div id="toastContainer"></div>
 
     <script>
-        // SEM SUPABASE - USANDO LOCALSTORAGE
+        // SEM SUPABASE - APENAS LOCALSTORAGE PARA GARANTIR QUE FUNCIONE
         let currentUser = null;
         let selectedPhotoBase64 = null;
         let savedCvs = JSON.parse(localStorage.getItem('cvs') || '[]');
@@ -121,6 +121,7 @@
         }
         
         function calcularIdade(dataNascimento) {
+            if (!dataNascimento) return 0;
             const hoje = new Date();
             const nasc = new Date(dataNascimento);
             let idade = hoje.getFullYear() - nasc.getFullYear();
@@ -129,7 +130,7 @@
             return idade;
         }
         
-        // ========== LOGIN ==========
+        // ========== LOGIN - 100% FUNCIONAL ==========
         window.doLogin = function() {
             const user = document.getElementById('loginUser').value.trim();
             const pass = document.getElementById('loginPass').value;
@@ -186,37 +187,109 @@
             showMyCvs();
         }
         
-        // ========== PDF ==========
+        // ========== PDF PROFISSIONAL COM ESPAÇAMENTO 1.5 E FONTES AJUSTADAS ==========
         function gerarPDF(cvData, foto) {
             const content = `
-                <div style="font-family:'Inter';max-width:800px;margin:0 auto;padding:40px;background:white;color:#1e293b;">
-                    <div style="display:flex;gap:30px;margin-bottom:30px;align-items:center;">
-                        ${foto ? `<div style="width:120px;height:120px;border-radius:50%;overflow:hidden;border:3px solid #6366f1;"><img src="${foto}" style="width:100%;height:100%;object-fit:cover;"></div>` : '<div style="width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#d946ef);display:flex;align-items:center;justify-content:center;"><i class="fas fa-user" style="font-size:3em;color:white;"></i></div>'}
-                        <div><h1 style="font-size:2.5em;background:linear-gradient(135deg,#6366f1,#d946ef);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">${cvData.fullName || 'Nome'}</h1><p>${cvData.title || 'Profissional'}</p></div>
+                <div style="font-family:'Inter', 'Segoe UI', sans-serif; max-width: 800px; margin: 0 auto; padding: 45px; background: white; color: #1e293b; line-height: 1.5; font-size: 12px;">
+                    <!-- Cabeçalho com foto e nome -->
+                    <div style="display: flex; gap: 35px; margin-bottom: 35px; align-items: center; border-bottom: 3px solid #6366f1; padding-bottom: 25px;">
+                        <div style="width: 130px; height: 130px; border-radius: 50%; overflow: hidden; border: 4px solid #6366f1; box-shadow: 0 5px 20px rgba(99,102,241,0.3);">
+                            ${foto ? `<img src="${foto}" style="width: 100%; height: 100%; object-fit: cover;">` : '<div style="width:100%;height:100%;background:linear-gradient(135deg,#6366f1,#d946ef);display:flex;align-items:center;justify-content:center;"><i class="fas fa-user" style="font-size: 3em; color: white;"></i></div>'}
+                        </div>
+                        <div style="flex:1;">
+                            <h1 style="font-size: 28px; font-weight: 800; margin: 0 0 8px 0; background: linear-gradient(135deg, #6366f1, #d946ef); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${cvData.fullName || 'Nome do Profissional'}</h1>
+                            <p style="font-size: 16px; color: #64748b; margin: 0; font-weight: 500;">${cvData.title || 'Profissional'}</p>
+                        </div>
                     </div>
-                    <div style="display:grid;grid-template-columns:1fr 2fr;gap:30px;">
+                    
+                    <!-- Corpo do Currículo em 2 colunas -->
+                    <div style="display: grid; grid-template-columns: 1fr 1.8fr; gap: 35px;">
+                        <!-- Coluna Esquerda -->
                         <div>
-                            <h3>📞 Contato</h3>
-                            <p>Email: ${cvData.email || '—'}<br>Tel: ${cvData.phone || '—'}<br>Tel Alt: ${cvData.phoneAlt || '—'}<br>Endereço: ${cvData.address || '—'}<br>Casa: ${cvData.houseNumber || '—'}, QTO: ${cvData.block || '—'}</p>
-                            <h3>🆔 Documentos</h3>
-                            <p>BI: ${cvData.documentId || '—'}<br>Naturalidade: ${cvData.naturality || '—'}<br>Nacionalidade: ${cvData.nationality || '—'}<br>Nascimento: ${cvData.birthDate || '—'}</p>
-                            <h3>🎓 Educação</h3>
-                            <p>10ª: ${cvData.grade10 || '—'} (${cvData.grade10Year || '—'})<br>12ª: ${cvData.grade12 || '—'} (${cvData.grade12Year || '—'})<br>Superior: ${cvData.higherEducation || '—'}</p>
-                            <h3>💼 Habilidades</h3>
-                            <p>${cvData.skills || '—'}</p>
+                            <!-- Contato -->
+                            <div style="margin-bottom: 28px;">
+                                <h3 style="font-size: 16px; font-weight: 700; color: #6366f1; margin-bottom: 12px; letter-spacing: -0.3px; border-left: 3px solid #6366f1; padding-left: 12px;">📞 CONTATO</h3>
+                                <div style="line-height: 1.6;">
+                                    <p style="margin: 6px 0;"><strong>Email:</strong> ${cvData.email || '—'}</p>
+                                    <p style="margin: 6px 0;"><strong>Telefone:</strong> ${cvData.phone || '—'}</p>
+                                    <p style="margin: 6px 0;"><strong>Telefone Alt:</strong> ${cvData.phoneAlt || '—'}</p>
+                                    <p style="margin: 6px 0;"><strong>Endereço:</strong> ${cvData.address || '—'}</p>
+                                    <p style="margin: 6px 0;"><strong>Casa:</strong> ${cvData.houseNumber || '—'} | <strong>Quarteirão:</strong> ${cvData.block || '—'}</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Documentos -->
+                            <div style="margin-bottom: 28px;">
+                                <h3 style="font-size: 16px; font-weight: 700; color: #6366f1; margin-bottom: 12px; letter-spacing: -0.3px; border-left: 3px solid #6366f1; padding-left: 12px;">🆔 DOCUMENTOS</h3>
+                                <div style="line-height: 1.6;">
+                                    <p style="margin: 6px 0;"><strong>BI/Passaporte:</strong> ${cvData.documentId || '—'}</p>
+                                    <p style="margin: 6px 0;"><strong>Naturalidade:</strong> ${cvData.naturality || '—'}</p>
+                                    <p style="margin: 6px 0;"><strong>Nacionalidade:</strong> ${cvData.nationality || '—'}</p>
+                                    <p style="margin: 6px 0;"><strong>Nascimento:</strong> ${cvData.birthDate || '—'}</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Educação -->
+                            <div style="margin-bottom: 28px;">
+                                <h3 style="font-size: 16px; font-weight: 700; color: #6366f1; margin-bottom: 12px; letter-spacing: -0.3px; border-left: 3px solid #6366f1; padding-left: 12px;">🎓 FORMAÇÃO</h3>
+                                <div style="line-height: 1.6;">
+                                    <p style="margin: 6px 0;"><strong>10ª Classe:</strong> ${cvData.grade10 || '—'} (${cvData.grade10Year || '—'})</p>
+                                    <p style="margin: 6px 0;"><strong>12ª Classe:</strong> ${cvData.grade12 || '—'} (${cvData.grade12Year || '—'})</p>
+                                    <p style="margin: 6px 0;"><strong>Formação Superior:</strong><br>${cvData.higherEducation || '—'}</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Habilidades -->
+                            <div style="margin-bottom: 28px;">
+                                <h3 style="font-size: 16px; font-weight: 700; color: #6366f1; margin-bottom: 12px; letter-spacing: -0.3px; border-left: 3px solid #6366f1; padding-left: 12px;">💼 HABILIDADES</h3>
+                                <div style="line-height: 1.6;">
+                                    <p style="margin: 6px 0; white-space: pre-line;">${cvData.skills || '—'}</p>
+                                </div>
+                            </div>
                         </div>
+                        
+                        <!-- Coluna Direita -->
                         <div>
-                            <h3>📝 Sobre Mim</h3>
-                            <p>${cvData.summary || '—'}</p>
-                            <h3>💼 Experiência</h3>
-                            <p>${cvData.experience || '—'}</p>
-                            <h3>🌐 Idiomas</h3>
-                            <p>${cvData.languages || '—'}</p>
+                            <!-- Sobre Mim -->
+                            <div style="margin-bottom: 28px;">
+                                <h3 style="font-size: 16px; font-weight: 700; color: #6366f1; margin-bottom: 12px; letter-spacing: -0.3px; border-left: 3px solid #6366f1; padding-left: 12px;">📝 SOBRE MIM</h3>
+                                <div style="line-height: 1.6;">
+                                    <p style="margin: 6px 0; text-align: justify;">${cvData.summary || '—'}</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Experiência Profissional -->
+                            <div style="margin-bottom: 28px;">
+                                <h3 style="font-size: 16px; font-weight: 700; color: #6366f1; margin-bottom: 12px; letter-spacing: -0.3px; border-left: 3px solid #6366f1; padding-left: 12px;">💼 EXPERIÊNCIA</h3>
+                                <div style="line-height: 1.6;">
+                                    <p style="margin: 6px 0; white-space: pre-line; text-align: justify;">${cvData.experience || '—'}</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Idiomas -->
+                            <div style="margin-bottom: 28px;">
+                                <h3 style="font-size: 16px; font-weight: 700; color: #6366f1; margin-bottom: 12px; letter-spacing: -0.3px; border-left: 3px solid #6366f1; padding-left: 12px;">🌐 IDIOMAS</h3>
+                                <div style="line-height: 1.6;">
+                                    <p style="margin: 6px 0; white-space: pre-line;">${cvData.languages || '—'}</p>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    
+                    <!-- Rodapé -->
+                    <div style="margin-top: 35px; padding-top: 20px; border-top: 1px solid #e2e8f0; text-align: center; font-size: 10px; color: #94a3b8;">
+                        <p>Currículo gerado via CV Premium • Documento oficial</p>
                     </div>
                 </div>
             `;
-            const opt = { margin: [0.5,0.5,0.5,0.5], filename: `CV_${cvData.fullName || 'curriculo'}.pdf`, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'a4' } };
+            
+            const opt = { 
+                margin: [0.5, 0.5, 0.5, 0.5], 
+                filename: `CV_${cvData.fullName || 'curriculo'}.pdf`, 
+                image: { type: 'jpeg', quality: 0.98 }, 
+                html2canvas: { scale: 2, letterRendering: true, useCORS: true }, 
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } 
+            };
             const el = document.createElement('div');
             el.innerHTML = content;
             document.body.appendChild(el);
@@ -326,6 +399,7 @@
             if (!cvData.birthDate) { showToast('Preencha a data de nascimento!', 'error'); return; }
             salvarCv(cvData);
             gerarPDF(cvData, selectedPhotoBase64);
+            showToast('CV salvo com sucesso!');
         };
         
         function showMyCvs() {

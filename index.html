@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV Premium - Funcional</title>
+    <title>CV Premium - Sistema Completo</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/html2pdf.js/dist/html2pdf.bundle.min.js"></script>
@@ -107,7 +107,7 @@
     <div id="toastContainer"></div>
 
     <script>
-        // SEM SUPABASE - APENAS LOCALSTORAGE PARA GARANTIR QUE FUNCIONE
+        // ========== SEM SUPABASE - APENAS LOCALSTORAGE ==========
         let currentUser = null;
         let selectedPhotoBase64 = null;
         let savedCvs = JSON.parse(localStorage.getItem('cvs') || '[]');
@@ -187,97 +187,64 @@
             showMyCvs();
         }
         
-        // ========== PDF PROFISSIONAL COM ESPAÇAMENTO 1.5 E FONTES AJUSTADAS ==========
+        // ========== PDF PROFISSIONAL ==========
         function gerarPDF(cvData, foto) {
             const content = `
-                <div style="font-family:'Inter', 'Segoe UI', sans-serif; max-width: 800px; margin: 0 auto; padding: 45px; background: white; color: #1e293b; line-height: 1.5; font-size: 12px;">
-                    <!-- Cabeçalho com foto e nome -->
-                    <div style="display: flex; gap: 35px; margin-bottom: 35px; align-items: center; border-bottom: 3px solid #6366f1; padding-bottom: 25px;">
-                        <div style="width: 130px; height: 130px; border-radius: 50%; overflow: hidden; border: 4px solid #6366f1; box-shadow: 0 5px 20px rgba(99,102,241,0.3);">
+                <div style="font-family: 'Times New Roman', Times, serif; max-width: 800px; margin: 0 auto; padding: 40px; background: white; color: #1a1a1a; line-height: 1.5; font-size: 12pt;">
+                    <div style="display: flex; gap: 30px; margin-bottom: 35px; align-items: center; border-bottom: 2px solid #6366f1; padding-bottom: 25px;">
+                        <div style="width: 130px; height: 130px; border-radius: 50%; overflow: hidden; border: 3px solid #6366f1; background: #f0f0f0;">
                             ${foto ? `<img src="${foto}" style="width: 100%; height: 100%; object-fit: cover;">` : '<div style="width:100%;height:100%;background:linear-gradient(135deg,#6366f1,#d946ef);display:flex;align-items:center;justify-content:center;"><i class="fas fa-user" style="font-size: 3em; color: white;"></i></div>'}
                         </div>
                         <div style="flex:1;">
-                            <h1 style="font-size: 28px; font-weight: 800; margin: 0 0 8px 0; background: linear-gradient(135deg, #6366f1, #d946ef); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${cvData.fullName || 'Nome do Profissional'}</h1>
-                            <p style="font-size: 16px; color: #64748b; margin: 0; font-weight: 500;">${cvData.title || 'Profissional'}</p>
+                            <h1 style="font-size: 22pt; font-weight: 700; margin: 0 0 5px 0; color: #1a1a1a;">${cvData.fullName || 'NOME DO PROFISSIONAL'}</h1>
+                            <p style="font-size: 14pt; color: #4a5568; margin: 0;">${cvData.title || 'Profissional'}</p>
                         </div>
                     </div>
                     
-                    <!-- Corpo do Currículo em 2 colunas -->
                     <div style="display: grid; grid-template-columns: 1fr 1.8fr; gap: 35px;">
-                        <!-- Coluna Esquerda -->
                         <div>
-                            <!-- Contato -->
-                            <div style="margin-bottom: 28px;">
-                                <h3 style="font-size: 16px; font-weight: 700; color: #6366f1; margin-bottom: 12px; letter-spacing: -0.3px; border-left: 3px solid #6366f1; padding-left: 12px;">📞 CONTATO</h3>
-                                <div style="line-height: 1.6;">
-                                    <p style="margin: 6px 0;"><strong>Email:</strong> ${cvData.email || '—'}</p>
-                                    <p style="margin: 6px 0;"><strong>Telefone:</strong> ${cvData.phone || '—'}</p>
-                                    <p style="margin: 6px 0;"><strong>Telefone Alt:</strong> ${cvData.phoneAlt || '—'}</p>
-                                    <p style="margin: 6px 0;"><strong>Endereço:</strong> ${cvData.address || '—'}</p>
-                                    <p style="margin: 6px 0;"><strong>Casa:</strong> ${cvData.houseNumber || '—'} | <strong>Quarteirão:</strong> ${cvData.block || '—'}</p>
-                                </div>
+                            <div style="margin-bottom: 25px;">
+                                <h2 style="font-size: 14pt; font-weight: 700; color: #6366f1; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">📞 CONTATO</h2>
+                                <div style="line-height: 1.6;"><p style="margin: 6px 0;"><strong>Email:</strong> ${cvData.email || '—'}</p>
+                                <p style="margin: 6px 0;"><strong>Telefone:</strong> ${cvData.phone || '—'}</p>
+                                <p style="margin: 6px 0;"><strong>Telefone Alt:</strong> ${cvData.phoneAlt || '—'}</p>
+                                <p style="margin: 6px 0;"><strong>Endereço:</strong> ${cvData.address || '—'}</p>
+                                <p style="margin: 6px 0;"><strong>Casa:</strong> ${cvData.houseNumber || '—'} | <strong>QTO:</strong> ${cvData.block || '—'}</p></div>
                             </div>
-                            
-                            <!-- Documentos -->
-                            <div style="margin-bottom: 28px;">
-                                <h3 style="font-size: 16px; font-weight: 700; color: #6366f1; margin-bottom: 12px; letter-spacing: -0.3px; border-left: 3px solid #6366f1; padding-left: 12px;">🆔 DOCUMENTOS</h3>
-                                <div style="line-height: 1.6;">
-                                    <p style="margin: 6px 0;"><strong>BI/Passaporte:</strong> ${cvData.documentId || '—'}</p>
-                                    <p style="margin: 6px 0;"><strong>Naturalidade:</strong> ${cvData.naturality || '—'}</p>
-                                    <p style="margin: 6px 0;"><strong>Nacionalidade:</strong> ${cvData.nationality || '—'}</p>
-                                    <p style="margin: 6px 0;"><strong>Nascimento:</strong> ${cvData.birthDate || '—'}</p>
-                                </div>
+                            <div style="margin-bottom: 25px;">
+                                <h2 style="font-size: 14pt; font-weight: 700; color: #6366f1; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">🆔 DOCUMENTOS</h2>
+                                <div style="line-height: 1.6;"><p style="margin: 6px 0;"><strong>BI/Passaporte:</strong> ${cvData.documentId || '—'}</p>
+                                <p style="margin: 6px 0;"><strong>Naturalidade:</strong> ${cvData.naturality || '—'}</p>
+                                <p style="margin: 6px 0;"><strong>Nacionalidade:</strong> ${cvData.nationality || '—'}</p>
+                                <p style="margin: 6px 0;"><strong>Data Nasc.:</strong> ${cvData.birthDate || '—'}</p></div>
                             </div>
-                            
-                            <!-- Educação -->
-                            <div style="margin-bottom: 28px;">
-                                <h3 style="font-size: 16px; font-weight: 700; color: #6366f1; margin-bottom: 12px; letter-spacing: -0.3px; border-left: 3px solid #6366f1; padding-left: 12px;">🎓 FORMAÇÃO</h3>
-                                <div style="line-height: 1.6;">
-                                    <p style="margin: 6px 0;"><strong>10ª Classe:</strong> ${cvData.grade10 || '—'} (${cvData.grade10Year || '—'})</p>
-                                    <p style="margin: 6px 0;"><strong>12ª Classe:</strong> ${cvData.grade12 || '—'} (${cvData.grade12Year || '—'})</p>
-                                    <p style="margin: 6px 0;"><strong>Formação Superior:</strong><br>${cvData.higherEducation || '—'}</p>
-                                </div>
+                            <div style="margin-bottom: 25px;">
+                                <h2 style="font-size: 14pt; font-weight: 700; color: #6366f1; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">🎓 FORMAÇÃO</h2>
+                                <div style="line-height: 1.6;"><p style="margin: 6px 0;"><strong>10ª Classe:</strong> ${cvData.grade10 || '—'} (${cvData.grade10Year || '—'})</p>
+                                <p style="margin: 6px 0;"><strong>12ª Classe:</strong> ${cvData.grade12 || '—'} (${cvData.grade12Year || '—'})</p>
+                                <p style="margin: 6px 0;"><strong>Formação Superior:</strong><br>${cvData.higherEducation || '—'}</p></div>
                             </div>
-                            
-                            <!-- Habilidades -->
-                            <div style="margin-bottom: 28px;">
-                                <h3 style="font-size: 16px; font-weight: 700; color: #6366f1; margin-bottom: 12px; letter-spacing: -0.3px; border-left: 3px solid #6366f1; padding-left: 12px;">💼 HABILIDADES</h3>
-                                <div style="line-height: 1.6;">
-                                    <p style="margin: 6px 0; white-space: pre-line;">${cvData.skills || '—'}</p>
-                                </div>
+                            <div style="margin-bottom: 25px;">
+                                <h2 style="font-size: 14pt; font-weight: 700; color: #6366f1; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">💼 HABILIDADES</h2>
+                                <div style="line-height: 1.6;"><p style="margin: 6px 0; white-space: pre-line;">${cvData.skills || '—'}</p></div>
                             </div>
                         </div>
-                        
-                        <!-- Coluna Direita -->
                         <div>
-                            <!-- Sobre Mim -->
-                            <div style="margin-bottom: 28px;">
-                                <h3 style="font-size: 16px; font-weight: 700; color: #6366f1; margin-bottom: 12px; letter-spacing: -0.3px; border-left: 3px solid #6366f1; padding-left: 12px;">📝 SOBRE MIM</h3>
-                                <div style="line-height: 1.6;">
-                                    <p style="margin: 6px 0; text-align: justify;">${cvData.summary || '—'}</p>
-                                </div>
+                            <div style="margin-bottom: 25px;">
+                                <h2 style="font-size: 14pt; font-weight: 700; color: #6366f1; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">📝 SOBRE MIM</h2>
+                                <div style="line-height: 1.6;"><p style="margin: 6px 0;">${cvData.summary || '—'}</p></div>
                             </div>
-                            
-                            <!-- Experiência Profissional -->
-                            <div style="margin-bottom: 28px;">
-                                <h3 style="font-size: 16px; font-weight: 700; color: #6366f1; margin-bottom: 12px; letter-spacing: -0.3px; border-left: 3px solid #6366f1; padding-left: 12px;">💼 EXPERIÊNCIA</h3>
-                                <div style="line-height: 1.6;">
-                                    <p style="margin: 6px 0; white-space: pre-line; text-align: justify;">${cvData.experience || '—'}</p>
-                                </div>
+                            <div style="margin-bottom: 25px;">
+                                <h2 style="font-size: 14pt; font-weight: 700; color: #6366f1; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">💼 EXPERIÊNCIA</h2>
+                                <div style="line-height: 1.6;"><p style="margin: 6px 0; white-space: pre-line;">${cvData.experience || '—'}</p></div>
                             </div>
-                            
-                            <!-- Idiomas -->
-                            <div style="margin-bottom: 28px;">
-                                <h3 style="font-size: 16px; font-weight: 700; color: #6366f1; margin-bottom: 12px; letter-spacing: -0.3px; border-left: 3px solid #6366f1; padding-left: 12px;">🌐 IDIOMAS</h3>
-                                <div style="line-height: 1.6;">
-                                    <p style="margin: 6px 0; white-space: pre-line;">${cvData.languages || '—'}</p>
-                                </div>
+                            <div style="margin-bottom: 25px;">
+                                <h2 style="font-size: 14pt; font-weight: 700; color: #6366f1; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">🌐 IDIOMAS</h2>
+                                <div style="line-height: 1.6;"><p style="margin: 6px 0; white-space: pre-line;">${cvData.languages || '—'}</p></div>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Rodapé -->
-                    <div style="margin-top: 35px; padding-top: 20px; border-top: 1px solid #e2e8f0; text-align: center; font-size: 10px; color: #94a3b8;">
+                    <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #e2e8f0; text-align: center; font-size: 9pt; color: #94a3b8;">
                         <p>Currículo gerado via CV Premium • Documento oficial</p>
                     </div>
                 </div>
